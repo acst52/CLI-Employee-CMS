@@ -1,64 +1,51 @@
 // Node.js APP SET UP:
 const inquirer = require('inquirer');
+const { createDepartment } = require('./db/index');
+require('console.table');
 
-// Import MySQL connection:
-const sequelize = require('./config/connection');
-
-// Synchronize the db by importing Sequelize models & calling the sync() method on the Sequelize instance - this will create the tables and columns in the db
-const Department = require('./models/Department');
-const Employee = require('./models/Employee');
-const Role = require('./models/Role');
-
-sequelize.sync({ force: true }).then(() => {
-    console.log('Database synchronized');
-  }).catch((error) => {
-    console.error('Error synchronizing database:', error);
-});
-
+const db = require('./db/index');
 
 // Write Inquirer prompts:
 
+function main() {
 inquirer.prompt([
     {
       type: 'list',
-      name: 'viewDepartments',
+      name: 'choice',
       message: 'What would you like to do?',
-      choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
+      choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Quit']
     }
-  ]).then((answers) => {
-    switch (answers.viewDepartments) {
-      case 'View all departments':
-        Department.findAll().then((departments) => {
-          console.table(departments);
-        }).catch((error) => {
-          console.error(error);
-        });
+  ]).then(res => {
+    let choice = res.choice;
+    switch (choice) {
+      case 'View all departments': 
+        viewDepartments();
         break;
       case 'View all roles':
-        // code to view all roles
+        viewRoles();
         break;
       case 'View all employees':
-        // code to view all employees
+        viewEmployees();
         break;
       case 'Add a department':
-        // code to add a department
+        addDepartment();
         break;
       case 'Add a role':
-
-
+        addRole();
+        break;
+      case 'Add an employee':
+        addEmployee();
+        break;
+      case 'Update an employee role':
+        updateEmployee();
+        break;
+          default:
+            quit(); 
     }
 });
+}
 
-
-
-// Write code to handle ea option dep on user selection:
-  // EX: "View all departments" option handling:
-
-connection.query('SELECT * FROM department', (err, results) => {
-    if (err) throw err;
-    console.table(results);
-    // return to the main prompt
-  });
+main();
 
 
 // MySQL COMPANY EMPLOYEE DATABASE SET UP:
