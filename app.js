@@ -1,11 +1,11 @@
-// Node.js APP SET UP:
+// Node.js APP set up:
 const inquirer = require('inquirer');
-const { createDepartment } = require('./db/index');
 require('console.table');
 
+// Import class and instance methods:
 const db = require('./db/index');
 
-// Write Inquirer prompts:
+// Write first Inquirer prompt options that branch off into separate paths inside a main fcn:
 
 function main() {
 inquirer.prompt([
@@ -18,7 +18,8 @@ inquirer.prompt([
   ]).then(res => {
     let choice = res.choice;
     switch (choice) {
-      case 'View all departments': 
+      case 'View all departments':
+      // for each choice case, send to that choice's function then break
         viewDepartments();
         break;
       case 'View all roles':
@@ -40,37 +41,79 @@ inquirer.prompt([
         updateEmployee();
         break;
           default:
-            quit(); 
+            quit(); // quit option exits CLI CMS
     }
 });
 }
 
 main();
 
+viewEmployees() {
+  db.findAllEmployees()
+  .then(([ rows ]) => {
+    let employees = rows;
+    console.table(employees);
+  }) 
+  .then(() => main())
+}
 
-// MySQL COMPANY EMPLOYEE DATABASE SET UP:
+// viewRoles() & viewDepartments() ^ similar to above ^
 
-// CREATE TABLE department (
-//     id INT AUTO_INCREMENT PRIMARY KEY,
-//     name VARCHAR(30) NOT NULL
-//   );
-  
-//   CREATE TABLE role (
-//     id INT AUTO_INCREMENT PRIMARY KEY,
-//     title VARCHAR(30) NOT NULL,
-//     salary DECIMAL(10, 2) NOT NULL,
-//     department_id INT NOT NULL,
-//     FOREIGN KEY (department_id) REFERENCES department(id)
-//   );
-  
-//   CREATE TABLE employee (
-//     id INT AUTO_INCREMENT PRIMARY KEY,
-//     first_name VARCHAR(30) NOT NULL,
-//     last_name VARCHAR(30) NOT NULL,
-//     role_id INT NOT NULL,
-//     manager_id INT,
-//     FOREIGN KEY (role_id) REFERENCES role(id),
-//     FOREIGN KEY (manager_id) REFERENCES employee(id)
-//   );
 
-// OR USE SEQUELIZE PKG
+addDepartment() {
+  inquirer.prompt({
+    name: 'departmentName',
+    message: 'What is the name of the department?'
+  })
+  .then(res => {
+    let departmentName = res;
+    db.createDepartment(departmentName)
+    .then(() => console.log(`Added ${departmentName.departmentName} to the database.`))
+    .then(() => main())
+  });
+}
+
+// ^ addRole() probably similar to addDepartment() ... ^
+
+addEmployee() {
+  inquirer.prompt([
+    {
+      name: "first_name",
+      message: "What is the employees first name?"
+    },
+    {
+      name: "last_name",
+      message: "What is the employees last name?"
+    }
+])
+.then(res => {
+  let firstName = res.first_name
+  let lastName = res.last_name
+  db.findAllRoles()
+  .then(([ rows ]) => {
+    let roles = rows
+    const roleChoices = roles.map(({id, title}) => ({ // destruct roles
+      name: title, 
+      value: id,
+    }))
+    inquirer.prompt({
+      type: "list",
+      name: "roleID",
+      message: "What is the employees role?",
+      choices: roleChoices
+    })
+    .then(res => {
+      let roleID = res.roleID
+      db.findAllEmployees()
+      .then(([ rows ]) => {
+        let employees = rows
+        const managerChoices = employees.map(({id, first_name, last_name}) => ({
+          name: `${first_name} ${last_name}`,
+          value: id
+        })) 
+// add another inquirer.prompt that asks who's the employee manager, manager choces, create variable that is employee obj that you pass to db.createEmmployee
+      })
+    })
+  })
+})
+}
