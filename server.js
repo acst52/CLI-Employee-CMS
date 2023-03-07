@@ -48,7 +48,7 @@ inquirer.prompt([
 
 main();
 
-viewEmployees() {
+viewEmployees(); {
   db.findAllEmployees()
   .then(([ rows ]) => {
     const employees = rows;
@@ -59,7 +59,7 @@ viewEmployees() {
   });
 }
 
-viewRoles() {
+viewRoles(); {
   db.findAllRoles()
   .then(([ rows ]) => {
     const roles = rows;
@@ -70,7 +70,7 @@ viewRoles() {
   });
 }
 
-viewDepartments() {
+viewDepartments(); {
   db.findAllDepartments()
   .then(([ rows ]) => {
     const departments = rows;
@@ -81,7 +81,7 @@ viewDepartments() {
   });
 }
 
-addDepartment() {
+addDepartment(); {
   inquirer.prompt({
     name: 'departmentName',
     message: 'What is the name of the department?'
@@ -94,7 +94,7 @@ addDepartment() {
   });
 }
 
-addRole() {
+addRole(); {
   inquirer.prompt({
     name: 'roleName',
     message: 'What is the name of the role?'
@@ -107,7 +107,7 @@ addRole() {
   });
 }
 
-addEmployee() {
+addEmployee(); {
   inquirer.prompt([
     {
       name: "first_name",
