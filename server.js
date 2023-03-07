@@ -51,14 +51,35 @@ main();
 viewEmployees() {
   db.findAllEmployees()
   .then(([ rows ]) => {
-    let employees = rows;
+    const employees = rows;
     console.table(employees);
-  }) 
-  .then(() => main())
+  })
+  .then(() => {
+    main();
+  });
 }
 
-// viewRoles() & viewDepartments() ^ similar to above ^
+viewRoles() {
+  db.findAllRoles()
+  .then(([ rows ]) => {
+    const roles = rows;
+    console.table(roles);
+  })
+  .then(() => {
+    main();
+  });
+}
 
+viewDepartments() {
+  db.findAllDepartments()
+  .then(([ rows ]) => {
+    const departments = rows;
+    console.table(departments);
+  })
+  .then(() => {
+    main();
+  });
+}
 
 addDepartment() {
   inquirer.prompt({
@@ -73,7 +94,18 @@ addDepartment() {
   });
 }
 
-// ^ addRole() probably similar to addDepartment() ... ^
+addRole() {
+  inquirer.prompt({
+    name: 'roleName',
+    message: 'What is the name of the role?'
+  })
+  .then(res => {
+    let roleName = res;
+    db.createRole(roleName)
+    .then(() => console.log(`Added ${roleName.roleName} to the database.`))
+    .then(() => main())
+  });
+}
 
 addEmployee() {
   inquirer.prompt([
@@ -110,10 +142,28 @@ addEmployee() {
         const managerChoices = employees.map(({id, first_name, last_name}) => ({
           name: `${first_name} ${last_name}`,
           value: id
-        })) 
-// add another inquirer.prompt that asks who's the employee manager, manager choces, create variable that is employee obj that you pass to db.createEmmployee
-      })
-    })
-  })
-})
+        }))
+        inquirer.prompt({
+          type: "list",
+          name: "managerID",
+          message: "Who is the employees manager?",
+          choices: managerChoices
+        })
+        .then(res => {
+          let managerID = res.managerID;
+          // create variable that is employee obj that you pass to db.createEmployee:
+          let employee = {
+            first_name: firstName,
+            last_name: lastName,
+            role_id: roleID,
+            manager_id: managerID
+          };
+          db.createEmployee(employee)
+          .then(() => console.log(`${firstName} ${lastName} added to the database!`))
+          .then(() => main());
+        });
+        });
+      });
+    });
+  });
 }
