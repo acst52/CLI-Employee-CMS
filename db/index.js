@@ -28,7 +28,7 @@ class Db {
             "INSERT INTO department SET ?", department
         )
     }
-    createRole(Role) {
+    createRole(role) {
         return this.connection.promise().query(
             "INSERT INTO role SET ?", role
         )

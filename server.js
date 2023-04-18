@@ -83,13 +83,13 @@ function viewDepartments() {
 
 function addDepartment() {
   inquirer.prompt({
-    name: 'departmentName',
+    name: 'name',
     message: 'What is the name of the department?'
   })
   .then(res => {
     let departmentName = res;
     db.createDepartment(departmentName)
-    .then(() => console.log(`Added ${departmentName.departmentName} to the database.`))
+    .then(() => console.log(`Added ${departmentName.name} to the database.`))
     .then(() => main())
   });
 }
