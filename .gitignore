@@ -4,10 +4,6 @@ node_modules
 # Ignore folder custom attributes on MacOS
 .DS_Store
 
-# Ignore folder/icon custom attributes on Windows
-Thumbs.db
-desktop.ini
-
 # Environment variables
 .env
 
