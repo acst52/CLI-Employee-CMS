@@ -1,6 +1,6 @@
 // Node.js APP set up:
 const inquirer = require('inquirer');
-require('console.table');
+const consoleTable = require('console.table');
 
 // Import class and instance methods:
 const db = require('./db/index');
@@ -48,7 +48,7 @@ inquirer.prompt([
 
 main();
 
-viewEmployees(); {
+function viewEmployees() {
   db.findAllEmployees()
   .then(([ rows ]) => {
     const employees = rows;
@@ -59,7 +59,7 @@ viewEmployees(); {
   });
 }
 
-viewRoles(); {
+function viewRoles() {
   db.findAllRoles()
   .then(([ rows ]) => {
     const roles = rows;
@@ -70,7 +70,7 @@ viewRoles(); {
   });
 }
 
-viewDepartments(); {
+function viewDepartments() {
   db.findAllDepartments()
   .then(([ rows ]) => {
     const departments = rows;
@@ -81,7 +81,7 @@ viewDepartments(); {
   });
 }
 
-addDepartment(); {
+function addDepartment() {
   inquirer.prompt({
     name: 'departmentName',
     message: 'What is the name of the department?'
@@ -94,7 +94,7 @@ addDepartment(); {
   });
 }
 
-addRole(); {
+function addRole() {
   inquirer.prompt({
     name: 'roleName',
     message: 'What is the name of the role?'
@@ -107,7 +107,7 @@ addRole(); {
   });
 }
 
-addEmployee(); {
+function addEmployee() {
   inquirer.prompt([
     {
       name: "first_name",
