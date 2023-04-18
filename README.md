@@ -12,6 +12,7 @@ In this Module 12 Challenge, we were tasked to create an employee content manage
 * [License](#license)
 * [Contributing](#contributing)
 * [Tests](#tests)
+* [Sources](#sources)
 * [Questions](#questions)
 
 ## Installation
@@ -36,6 +37,10 @@ None! This is a Full Stack Web Development Bootcamp homework challenge.
 ## Tests
 
 There are no tests to be performed.
+
+## Sources
+
+Please note that my tutor, [Andrew Mason](https://github.com/atmason90), helped me complete this challenge.
 
 ## Questions
 
