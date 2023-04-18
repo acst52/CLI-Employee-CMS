@@ -38,6 +38,12 @@ class Db {
             "INSERT INTO employee SET ?", employee
         )
     }
+    updateEmployeeRole(employeeId, newRoleId) {
+        return this.connection.promise().query(
+            "UPDATE employee SET role_id = ? WHERE id = ?",
+            [newRoleId, employeeId]
+        );
+    }
 };
 
 module.exports = new Db(connection)
