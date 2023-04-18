@@ -95,14 +95,28 @@ function addDepartment() {
 }
 
 function addRole() {
-  inquirer.prompt({
-    name: 'roleName',
+  inquirer.prompt([
+  {
+    name: 'title',
     message: 'What is the name of the role?'
-  })
+  },
+  {
+    name: 'salary',
+    message: 'What is the salary of this role?'
+  },
+  {
+    name: 'department_id',
+    message: 'What is the department of this role?'
+  }
+])
   .then(res => {
-    let roleName = res;
-    db.createRole(roleName)
-    .then(() => console.log(`Added ${roleName.roleName} to the database.`))
+    let roleData = {
+      title: res.title,
+      salary: res.salary,
+      department_id: res.department_id
+    };
+    db.createRole(roleData)
+    .then(() => console.log(`Added ${roleData.title} to the database.`))
     .then(() => main())
   });
 }
