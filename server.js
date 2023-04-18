@@ -182,18 +182,18 @@ function addEmployee() {
   });
 }
 
-function updateEmployee() {
-  const employeeChoices = db.findAllEmployees()[0].map(employee => ({
+async function updateEmployee() {
+  const employeeChoices = (await db.findAllEmployees())[0].map(employee => ({
     name: `${employee.first_name} ${employee.last_name}`,
     value: employee.id,
   }));
 
-  const roleChoices = db.findAllRoles()[0].map(role => ({
+  const roleChoices = (await db.findAllRoles())[0].map(role => ({
     name: role.title,
     value: role.id,
   }));
 
-  const { employeeId, newRoleId } = inquirer.prompt([
+  const { employeeId, newRoleId } = await inquirer.prompt([
     {
       type: 'list',
       name: 'employeeId',
@@ -207,6 +207,7 @@ function updateEmployee() {
       choices: roleChoices,
     },
   ]);
+  
   db.updateEmployeeRole(employeeId, newRoleId)
     .then(() => console.log(`Updated employee's role in the database.`))
     .then(() => main());
