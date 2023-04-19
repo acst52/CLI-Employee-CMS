@@ -3,7 +3,8 @@
 
 ## Description
 
-In this Module 12 Challenge, we were tasked to create an employee content management system (CMS), a non-developer friendly command-line app that manages a company's employee database in the command-line interface (CLI). We used Node.js, the Inquirer package and MySQL. Peep my [https://user-images.githubusercontent.com/116177485/233116020-4803c262-ea38-4a3c-9312-487cd6869770.png](https://drive.google.com/file/d/1qO-KTQq6RaivUlZgMa5yJE8M2HlldBma/view)
+In this Module 12 Challenge, we were tasked to create an employee content management system (CMS), a non-developer friendly command-line app that manages a company's employee database in the command-line interface (CLI). We used Node.js, the Inquirer package and MySQL. You can peep said walkthrough video here: 
+[![Walkthrough Video](https://user-images.githubusercontent.com/116177485/233116746-8c6fa43a-abe2-489a-b0ca-005d47b9066e.png)](https://drive.google.com/file/d/1qO-KTQq6RaivUlZgMa5yJE8M2HlldBma/view)
 
 ## Table of Contents
 
